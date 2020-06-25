@@ -1,7 +1,7 @@
 # Download Deleter
 
 ## Summary
-Deletes files in specified folders
+Deletes files in specified directories
 
 ## Task
 This is a Python program for deleting files in specified directories (paths.txt)
