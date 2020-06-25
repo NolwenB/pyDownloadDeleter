@@ -1,5 +1,5 @@
 # Download Deleter
-### Do not use this program yet as it is not finished.
+
 ## Summary
 Deletes files in specified folders
 

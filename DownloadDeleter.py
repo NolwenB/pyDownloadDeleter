@@ -37,7 +37,8 @@ for b in paths:
     for a in onlyfiles:
         if (time.time()-os.path.getmtime(b+a) >= delete_time):
             file_amount += 1
-            print(f"** {a} \t\t: {time.time()-os.path.getmtime(b+a)}")
+            print(f"** {a}")
+print(f"Amount of files: {file_amount}")
 # Asks users if the files can be deleted
 if file_amount == 0 or not delete_input():
     quit()
