@@ -1,12 +1,19 @@
 import getpass, os, time, shutil
+from color import col
+
+def print_items(paths):
+    pass
+def delete_items(paths):
+    pass
 
 def delete_input():
-    canDelete = input("Delete these files/folder? (y/n): ").upper()
+    print(f"Delete these file(s)/folder(s)? {col.WARNING}(y/n){col.ENDC}: ", end="")
+    canDelete = input().upper()
     if canDelete == "Y":
         return True
     elif canDelete == "N":
         return False
-    print("Try again dawg.")
+    print(f"{col.FAIL}Invalid Input{col.ENDC}")
     return delete_input()
 def set_time(minutes=0, hours=0, days=0):
     return (minutes*60) + (hours*3600) + (days*86400)
@@ -38,7 +45,10 @@ onlyfiles = [f for f in os.listdir(paths[0]) if os.path.isfile(os.path.join(path
 
 # [0] == Directory ~ [1] == Folders ~ [2] == Files
 items = next(os.walk(paths[0]))
-items[2].remove("desktop.ini")
+try:
+    items[2].remove("desktop.ini")
+except:
+    pass
 file_amount = 0
 folder_amount = 0
 for a in paths:
@@ -46,15 +56,16 @@ for a in paths:
     for b in items[2]:
         if (time.time()-os.path.getmtime(a+b) >= DELETE_TIME):
             file_amount += 1
-            print(f"** {b}")
+            print(f"** {col.OKBLUE}{b}{col.ENDC}")
     for c in items[1]:
         if (time.time()-os.path.getmtime(a+c+"\\") >= DELETE_TIME):
             folder_amount += 1
-            print(f"~~ {c}\\")
-print(f"Amount of files: {file_amount}")
-print(f"Amount of folders: {folder_amount}")
+            print(f"~~ {col.OKGREEN}{c}{col.ENDC}")
+print(f"Amount of files: {col.BOLD}{file_amount}{col.ENDC}")
+print(f"Amount of folders: {col.BOLD}{folder_amount}{col.ENDC}")
 # Asks users if the files can be deleted
 if file_amount + folder_amount == 0 or not delete_input():
+    print(f"{col.OKGREEN}No files/folders {col.ENDC} --  Quitting")
     quit()
 
 for a in paths:
@@ -65,3 +76,4 @@ for a in paths:
     for c in items[1]:
         if (time.time()-os.path.getmtime(a+c+"\\") >= DELETE_TIME):
             shutil.rmtree(a+c+"\\")
+print("\nDone.")
